@@ -18,6 +18,9 @@ class MovieDescController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'conditions' => [$this->request->query]
+        ];
         $movieDesc = $this->paginate($this->MovieDesc);
 
         $this->set(compact('movieDesc'));

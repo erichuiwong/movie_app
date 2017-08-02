@@ -1,41 +1,65 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Movie'), ['action' => 'edit', $movie->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Movie'), ['action' => 'delete', $movie->id], ['confirm' => __('Are you sure you want to delete # {0}?', $movie->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Movies'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Movie'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Movie Desc'), ['controller' => 'MovieDesc', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Movie Desc'), ['controller' => 'MovieDesc', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List People'), ['controller' => 'People', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Person'), ['controller' => 'People', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Movie Reviews'), ['controller' => 'MovieReviews', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Movie Review'), ['controller' => 'MovieReviews', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
 <div class="movies view large-9 medium-8 columns content">
-    <h3><?= h($movie->id) ?></h3>
-    <table class="vertical-table">
+    <h3><?= h($movie->movie_desc->movie_title) ?></h3>
+    <table>
         <tr>
-            <th scope="row"><?= __('Movie Desc') ?></th>
-            <td><?= $movie->has('movie_desc') ? $this->Html->link($movie->movie_desc->id, ['controller' => 'MovieDesc', 'action' => 'view', $movie->movie_desc->id]) : '' ?></td>
+            <td>Genres</td>
+            <td><?= h($movie->movie_desc->genres) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Person') ?></th>
-            <td><?= $movie->has('person') ? $this->Html->link($movie->person->id, ['controller' => 'People', 'action' => 'view', $movie->person->id]) : '' ?></td>
+            <td>Content Rating</td>
+            <td><?= h($movie->movie_desc->content_rating) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Movie Review') ?></th>
-            <td><?= $movie->has('movie_review') ? $this->Html->link($movie->movie_review->id, ['controller' => 'MovieReviews', 'action' => 'view', $movie->movie_review->id]) : '' ?></td>
+            <td>Movie Duration in Minutes</td>
+            <td><?= h($movie->movie_desc->duration) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($movie->id) ?></td>
+            <td>Movie Year</td>
+            <td><?= h($movie->movie_desc->movie_year) ?></td>
+        </tr>
+        <tr>
+            <td>Gross</td>
+            <td><?= $this->Number->currency(h($movie->movie_desc->gross), 'USD') ?></td>
+        </tr>
+        <tr>
+            <td>Budget</td>
+            <td><?= $this->Number->currency(h($movie->movie_desc->budget), 'USD') ?></td>
+        </tr>
+        <tr>
+            <td>Movie Imdb Link</td>
+            <td><?= h($movie->movie_desc->movie_imdb_link) ?></td>
+        </tr>
+        <tr>
+            <td>Imdb Score</td>
+            <td><?= h($movie->movie_review->imdb_score) ?></td>
+        </tr>
+        <tr>
+            <td>Number of User Reviews</td>
+            <td><?= h($movie->movie_review->num_user_for_reviews) ?></td>
+        </tr>
+        <tr>
+            <td>Number of Voted Users</td>
+            <td><?= h($movie->movie_review->num_voted_users) ?></td>
+        </tr>
+        <tr>
+            <td>Number of Critics</td>
+            <td><?= h($movie->movie_review->num_critic_for_reviews) ?></td>
+        </tr>
+        <tr>
+            <td>Director</td>
+            <td><?= h($movie->person->director) ?></td>
+        </tr>
+        <tr>
+            <td>Movie Actor 1</td>
+            <td><?= h($movie->person->actor_1) ?></td>
+        </tr>
+        <tr>
+            <td>Movie Actor 2</td>
+            <td><?= h($movie->person->actor_2) ?></td>
+        </tr>
+        <tr>
+            <td>Movie Actor 3</td>
+            <td><?= h($movie->person->actor_3) ?></td>
         </tr>
     </table>
 </div>

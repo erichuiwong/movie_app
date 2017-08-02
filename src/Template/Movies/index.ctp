@@ -1,44 +1,73 @@
-<?php
-/**
-  * @var \App\View\AppView $this
-  */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Movie'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Movie Desc'), ['controller' => 'MovieDesc', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Movie Desc'), ['controller' => 'MovieDesc', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List People'), ['controller' => 'People', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Person'), ['controller' => 'People', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Movie Reviews'), ['controller' => 'MovieReviews', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Movie Review'), ['controller' => 'MovieReviews', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="movies index large-9 medium-8 columns content">
-    <h3><?= __('Movies') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+<nav class="large-3 medium-4 columns">
+<h1>Movies</h1>
+    <table>
+    <?= $this->Form->create(false, ['type'=>'get']); ?>
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('movie_desc_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('people_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('movie_reviews_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th>Search</th>
+            </tr> 
+        </thead>
+        <tbody>
+            <tr>
+                <td><?= $this->Form->input('movie_title') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('director') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('actor') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('movie_year') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('genres') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('imdb_score') ?></td>
+            </tr>
+            <tr>
+                <td><?= $this->Form->input('gross') ?></td>
+            </tr>
+        </tbody>
+    </table>
+    <?= $this->Form->Submit('Search') ?>
+    <?= $this->Form->end() ?>
+</nav>
+
+<div class="movies index large-9 medium-8 columns content">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Movie Title</th>
+                <th>Movie Year</th>
+                <th>Director</th>
+                <th>Actor 1</th>
+                <th>Actor 2</th>
+                <th>Actor 3</th>
+                <th>Genres</th>
+                <th>Imdb Score</th>
+                <th>Gross</th>
+                <th>Budget</th>
+                <th>View Movie</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($movies as $movie): ?>
             <tr>
                 <td><?= $this->Number->format($movie->id) ?></td>
-                <td><?= $movie->has('movie_desc') ? $this->Html->link($movie->movie_desc->id, ['controller' => 'MovieDesc', 'action' => 'view', $movie->movie_desc->id]) : '' ?></td>
-                <td><?= $movie->has('person') ? $this->Html->link($movie->person->id, ['controller' => 'People', 'action' => 'view', $movie->person->id]) : '' ?></td>
-                <td><?= $movie->has('movie_review') ? $this->Html->link($movie->movie_review->id, ['controller' => 'MovieReviews', 'action' => 'view', $movie->movie_review->id]) : '' ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $movie->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $movie->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $movie->id], ['confirm' => __('Are you sure you want to delete # {0}?', $movie->id)]) ?>
-                </td>
+                <td><?= h($movie->movie_desc->movie_title) ?></td>
+                <td><?= h($movie->movie_desc->movie_year) ?></td>
+                <td><?= h($movie->person->director) ?></td>
+                <td><?= h($movie->person->actor_1) ?></td>
+                <td><?= h($movie->person->actor_2) ?></td>
+                <td><?= h($movie->person->actor_3) ?></td>
+                <td><?= h($movie->movie_desc->genres) ?></td>
+                <td><?= h($movie->movie_review->imdb_score) ?></td>
+                <td><?= $this->Number->currency(h($movie->movie_desc->gross), 'USD') ?></td>
+                <td><?= $this->Number->currency(h($movie->movie_desc->budget), 'USD') ?></td>
+                <td><?= $this->Html->link('View', ['action'=>'view', $movie->id]) ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

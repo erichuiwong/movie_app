@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\Table;
 
 /**
  * Movies Controller
@@ -21,6 +22,24 @@ class MoviesController extends AppController
         $this->paginate = [
             'contain' => ['MovieDesc', 'People', 'MovieReviews']
         ];
+
+        if(!empty($this->request->query)){
+
+            foreach($this->request->query as $field => $query){
+                // check the flags first
+                if(is_array($query) || $field == 'page'){
+                    continue;
+                } else if (!empty($query)) {
+                    if ($field == 'actor') {
+                        $this->paginate['conditions']['actor_1'.' LIKE'] = '%'.$query.'%';
+                    } else {
+                        $this->paginate['conditions'][$field.' LIKE'] = '%'.$query.'%';
+                    }
+                }
+            }
+            $this->request->data = $this->request->query;
+        }
+        
         $movies = $this->paginate($this->Movies);
 
         $this->set(compact('movies'));
